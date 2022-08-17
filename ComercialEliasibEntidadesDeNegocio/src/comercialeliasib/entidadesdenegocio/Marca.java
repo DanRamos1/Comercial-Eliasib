@@ -8,6 +8,6 @@ package comercialeliasib.entidadesdenegocio;
  *
  * @author Admin
  */
-public class Empresa {
+public class Marca {
     
 }

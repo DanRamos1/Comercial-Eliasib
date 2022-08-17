@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package comercialeliasib.entidadesdenegocio;
 
-/**
- *
- * @author Admin
- */
+
 public class Producto {
+    
+    private int Id;
+    private String Nombre;
+    private int IdCategoria;
+    private int IdMarca;
+    private double Precio;
+    private String Descripcion;
+    
     
 }
