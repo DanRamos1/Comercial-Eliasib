@@ -1,36 +1,64 @@
 
 package comercialeliasib.entidadesdenegocio;
+import java.util.ArrayList;
 
 
 public class Categoria {
     
     
-    private int Id;
-    private String Nombre;  
+    private int id;
+    private String nombre;
+    private int top_aux;
+    private ArrayList<Producto>productos;
 
     public Categoria() {
     }
 
-    public Categoria(int Id, String Nombre) {
-        this.Id = Id;
-        this.Nombre = Nombre;
+    public Categoria(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
+    }
+    
+
+    
+    
+
+
+    
+    
+
     
     
     
