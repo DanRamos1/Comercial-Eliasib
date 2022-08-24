@@ -1,4 +1,4 @@
-package ComercialEliasib.accesoadatos;
+package comercialeliasib.accesoadatos;
 
 import java.util.ArrayList;
 import java.sql.*;

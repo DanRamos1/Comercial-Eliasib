@@ -1,4 +1,4 @@
-package ComercialEliasib.accesoadatos;
+package comercialeliasib.accesoadatos;
 
 import java.util.ArrayList;
 import java.sql.*;
@@ -194,11 +194,10 @@ public class MarcaDAL {
         return marcas; 
     }
 
-    
-    /*static void MarcaDAL(Marca pMarca, ComunDB.UtilQuery pUtilQuery) throws SQLException {
+    static void QuerySelect(Marca pMarca, ComunDB.UtilQuery pUtilQuery) throws SQLException {
         PreparedStatement statement = pUtilQuery.getStatement();
         if (pMarca.getId() > 0) { 
-            pUtilQuery.AgregarWhereAnd(" m.Id=? "); 
+            pUtilQuery.AgregarWhereAnd(" r.Id=? "); 
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pMarca.getId());
             }
@@ -209,7 +208,7 @@ public class MarcaDAL {
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getNombre() + "%");
             }
         }  
-    }*/
+    }
     
     public static ArrayList<Marca> Buscar(Marca pMarca) throws Exception {
         ArrayList<Marca> marcas = new ArrayList();
