@@ -8,6 +8,6 @@ package comercialeliasib.accesoadatos;
  *
  * @author Admin
  */
-public class UsuarioDAL {
+public class ProductoDAL {
     
 }

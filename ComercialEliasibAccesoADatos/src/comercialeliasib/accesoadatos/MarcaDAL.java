@@ -1,41 +1,41 @@
+package ComercialEliasib.accesoadatos;
 
-package comercialeliasib.accesoadatos;
-
-import comercialeliasib.entidadesdenegocio.Rol;
 import java.util.ArrayList;
 import java.sql.*;
+import comercialeliasib.entidadesdenegocio.Marca;
 
+public class MarcaDAL {
 
-public class RolDAL {
+   
     static String ObtenerCampos(){
-        return "r.Id,r.Nombre";
+        return "m.Id,m.Nombre";
     }
     
-    private static String ObtenerSelect(Rol pRol){
+    private static String ObtenerSelect(Marca pMarca){
         String sql;
         sql = "SELECT ";
-        if (pRol.getTop_aux() > 0 ) {
-            sql += " TOP "+pRol.getTop_aux() + " ";
+        if (pMarca.getTop_aux() > 0 ) {
+            sql += " TOP "+pMarca.getTop_aux() + " ";
         } 
-        sql += (ObtenerCampos()+ " FROM Roles r");
+        sql += (ObtenerCampos()+ " FROM Marcas m");
         return sql;
     }
     
-    private static String AgregarOrderBy(Rol pRol) {
+    private static String AgregarOrderBy(Marca pMarca) {
         String sql = " ORDER BY u.Id DESC";
         return sql;
     }
     
-    private static boolean ExisteRol(Rol pRol) throws Exception {
+    private static boolean ExisteMarca(Marca pMarca) throws Exception {
         boolean existe = false;
-        ArrayList<Rol> roles = new ArrayList();
+        ArrayList<Marca> marcas = new ArrayList();
         try (Connection conn = ComunDB.ObtenerConexion();) { 
-            String sql = ObtenerSelect(pRol);  
-            sql += " WHERE r.Id<>? AND r.Nombre=?";
-            try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
-                ps.setInt(1, pRol.getId()); 
-                ps.setString(2, pRol.getNombre());  
-                ObtenerDatos(ps, roles);
+            String sql = ObtenerSelect(pMarca);  
+            sql += " WHERE m.Id<>? AND m.Nombre=?";
+            try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn,sql);){
+                ps.setInt(1, pMarca.getId()); 
+                ps.setString(2, pMarca.getNombre());  
+                ObtenerDatos(ps, marcas);
                 ps.close(); 
             } catch (SQLException ex) {
                 throw ex;
@@ -45,25 +45,25 @@ public class RolDAL {
         catch (SQLException ex) {
             throw ex; 
         }
-        if (!roles.isEmpty()) { 
-            Rol rol;
-            rol = roles.get(0); 
-            if (rol.getId() > 0 && rol.getNombre().equals(pRol.getNombre())) {
+        if (!marcas.isEmpty()) { 
+            Marca marca;
+            marca = marcas.get(0); 
+            if (marca.getId() > 0 && marca.getNombre().equals(pMarca.getNombre())) {
                 existe = true;
             }
         }
         return existe;
     }
    
-    public static int crear(Rol pRol) throws Exception {
+    public static int crear(Marca pMarca) throws Exception {
         int result;
         String sql;
-        boolean existe = ExisteRol(pRol);
+        boolean existe = ExisteMarca(pMarca);
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
                 sql = "INSERT INTO Roles(Nombre) VALUES(?)";
-                try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
-                    ps.setString(1, pRol.getNombre());
+                try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn,sql);) {
+                    ps.setString(1, pMarca.getNombre());
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {
@@ -76,20 +76,20 @@ public class RolDAL {
             }
         } else {
             result = 0;
-            throw new RuntimeException("Rol ya existe");
+            throw new RuntimeException("Marca ya existe");
         }
         return result; 
     }
 
-    public static int Modificar(Rol pRol) throws Exception {
+    public static int Modificar(Marca pMarca) throws Exception {
         int result;
         String sql;
-        boolean existe = ExisteRol(pRol);
+        boolean existe = ExisteMarca(pMarca);
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
                 sql = "UPDATE Roles SET Nombre=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
-                    ps.setString(1, pRol.getNombre()); 
+                    ps.setString(1, pMarca.getNombre()); 
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {
@@ -102,18 +102,18 @@ public class RolDAL {
             }
         } else {
             result = 0;
-            throw new RuntimeException("Rol ya existe"); 
+            throw new RuntimeException("Marca ya existe"); 
         }
         return result; 
     }
     
-    public static int Eliminar(Rol pRol) throws Exception {
+    public static int Eliminar(Marca pMarca) throws Exception {
         int result;
         String sql;
         try (Connection conn = ComunDB.ObtenerConexion();) { 
             sql = "DELETE FROM Roles WHERE Id=?"; 
-            try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
-                ps.setInt(1, pRol.getId());
+            try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn,sql);) { 
+                ps.setInt(1, pMarca.getId());
                 result = ps.executeUpdate(); 
                 ps.close(); 
             } catch (SQLException ex) {
@@ -127,21 +127,22 @@ public class RolDAL {
         return result;
     }
     
-    static int AsignarDatosResultSet(Rol pRol, ResultSet pResultSet, int pIndex) throws Exception {
+    static int AsignarDatosResultSet(Marca pMarca, ResultSet pResultSet, int pIndex) 
+            throws Exception {
         pIndex++;
-        pRol.setId(pResultSet.getInt(pIndex)); 
+        pMarca.setId(pResultSet.getInt(pIndex)); 
         pIndex++;
-        pRol.setNombre(pResultSet.getString(pIndex));
+        pMarca.setNombre(pResultSet.getString(pIndex));
         pIndex++;
         return pIndex;
     }
      
-    private static void ObtenerDatos(PreparedStatement pPS, ArrayList<Rol> pRol) throws Exception {
+    private static void ObtenerDatos(PreparedStatement pPS, ArrayList<Marca> pMarca) throws Exception {
         try (ResultSet resultSet = ComunDB.ObtenerResultSet(pPS);) {  
             while (resultSet.next()) { 
-                Rol rol = new Rol();               
-                AsignarDatosResultSet(rol, resultSet, 0);
-                pRol.add(rol); 
+                Marca marca = new Marca();               
+                AsignarDatosResultSet(marca, resultSet, 0);
+                pMarca.add(marca); 
             }
             resultSet.close(); 
         } catch (SQLException ex) {
@@ -149,15 +150,15 @@ public class RolDAL {
         }
     }
     
-    public static Rol ObtenerPorId(Rol pRol) throws Exception {
-        Rol rol = new Rol();
-        ArrayList<Rol> roles = new ArrayList();
+    public static Marca ObtenerPorId(Marca pMarca) throws Exception {
+        Marca marca = new Marca();
+        ArrayList<Marca> marcas = new ArrayList();
         try (Connection conn = ComunDB.ObtenerConexion();) {
-            String sql = ObtenerSelect(pRol);
+            String sql = ObtenerSelect(pMarca);
             sql += " WHERE r.Id=?";
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
-                ps.setInt(1, pRol.getId()); 
-                ObtenerDatos(ps, roles); 
+                ps.setInt(1, pMarca.getId()); 
+                ObtenerDatos(ps, marcas); 
                 ps.close();
             } catch (SQLException ex) {
                 throw ex; 
@@ -167,20 +168,20 @@ public class RolDAL {
         catch (SQLException ex) {
             throw ex; 
         }
-        if (!roles.isEmpty()) { 
-            rol = roles.get(0); 
+        if (!marcas.isEmpty()) { 
+            marca = marcas.get(0); 
         }
-        return rol; 
+        return marca; 
     }
     
-    public static ArrayList<Rol> ObtenerTodos() throws Exception {
-        ArrayList<Rol> roles;
-        roles = new ArrayList<>();
+    public static ArrayList<Marca> ObtenerTodos() throws Exception {
+        ArrayList<Marca> marcas;
+        marcas = new ArrayList<>();
         try (Connection conn = ComunDB.ObtenerConexion();) { 
-            String sql = ObtenerSelect(new Rol()); 
-            sql += AgregarOrderBy(new Rol());
+            String sql = ObtenerSelect(new Marca()); 
+            sql += AgregarOrderBy(new Marca());
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
-                ObtenerDatos(ps, roles); 
+                ObtenerDatos(ps, marcas); 
                 ps.close(); 
             } catch (SQLException ex) {
                 throw ex;
@@ -190,40 +191,41 @@ public class RolDAL {
         catch (SQLException ex) {
             throw ex; 
         }
-        return roles; 
+        return marcas; 
     }
 
-    static void QuerySelect(Rol pRol, ComunDB.UtilQuery pUtilQuery) throws SQLException {
+    
+    /*static void MarcaDAL(Marca pMarca, ComunDB.UtilQuery pUtilQuery) throws SQLException {
         PreparedStatement statement = pUtilQuery.getStatement();
-        if (pRol.getId() > 0) { 
-            pUtilQuery.AgregarWhereAnd(" r.Id=? "); 
+        if (pMarca.getId() > 0) { 
+            pUtilQuery.AgregarWhereAnd(" m.Id=? "); 
             if (statement != null) {
-                statement.setInt(pUtilQuery.getNumWhere(), pRol.getId());
+                statement.setInt(pUtilQuery.getNumWhere(), pMarca.getId());
             }
         }
-        if (pRol.getNombre() != null && pRol.getNombre().trim().isEmpty() == false) {
+        if (pMarca.getNombre() != null && pMarca.getNombre().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.Nombre LIKE ? "); 
             if (statement != null) {
-                statement.setString(pUtilQuery.getNumWhere(), "%" + pRol.getNombre() + "%");
+                statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getNombre() + "%");
             }
         }  
-    }
+    }*/
     
-    public static ArrayList<Rol> Buscar(Rol pRol) throws Exception {
-        ArrayList<Rol> roles = new ArrayList();
+    public static ArrayList<Marca> Buscar(Marca pMarca) throws Exception {
+        ArrayList<Marca> marcas = new ArrayList();
         try (Connection conn = ComunDB.ObtenerConexion();) {
-            String sql = ObtenerSelect(pRol); 
+            String sql = ObtenerSelect(pMarca); 
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
-            QuerySelect(pRol, utilQuery); 
+            QuerySelect(pMarca, utilQuery); 
             sql = utilQuery.getSQL();
-            sql += AgregarOrderBy(pRol); 
+            sql += AgregarOrderBy(pMarca); 
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
-                QuerySelect(pRol, utilQuery); 
-                ObtenerDatos(ps, roles); 
+                QuerySelect(pMarca, utilQuery); 
+                ObtenerDatos(ps, marcas); 
                 ps.close(); 
             } catch (SQLException ex) {
                 throw ex; 
@@ -233,7 +235,9 @@ public class RolDAL {
         catch (SQLException ex) {
             throw ex; 
         }
-        return roles; 
+        return marcas; 
     }
-    
+
+   
+
 }
