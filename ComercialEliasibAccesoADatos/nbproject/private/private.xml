@@ -5,13 +5,6 @@
         <group name="Proyecto-Java">
             <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/ComunDB.java</file>
         </group>
-        <group>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/MarcaDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/EmpleadoDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/RolDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/ProductoDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/ComunDB.java</file>
-            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/CategoriaDAL.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
