@@ -11,7 +11,7 @@ public class ProductoDAL {
     
     static String ObtenerCampos() {
         return "p.Id, p.IdCategoria, p.IdMarca, p.Nombre, p.Descripcion, p.Precio,"
-                + " p.Stock, p.RutaImagen, p.Estado, p.Fecha";
+                + "  p.Estado, p.Fecha";
     }
      
     private static String ObtenerSelect(Producto pProducto) {
@@ -71,7 +71,6 @@ public class ProductoDAL {
                     ps.setString(3, pProducto.getNombre());  
                     ps.setString(4, pProducto.getDescripcion());
                     ps.setDouble(5, pProducto.getPrecio());   
-                    ps.setInt(6, pProducto.getStock());
                     ps.setByte(7, (byte) pProducto.getEstado());  
                     ps.setDate(9, java.sql.Date.valueOf(LocalDate.now())); 
                     result = ps.executeUpdate(); 
@@ -103,7 +102,6 @@ public class ProductoDAL {
                     ps.setString(3, pProducto.getNombre());  
                     ps.setString(4, pProducto.getDescripcion());
                     ps.setDouble(5, pProducto.getPrecio());   
-                    ps.setInt(6, pProducto.getStock());
                     ps.setByte(7, (byte) pProducto.getEstado());
                 result = ps.executeUpdate();
                 ps.close();
@@ -293,12 +291,6 @@ public class ProductoDAL {
             pUtilQuery.AgregarWhereAnd(" p.Precio=? ");
             if (statement != null) {
                 statement.setDouble(pUtilQuery.getNumWhere(), pProducto.getPrecio());
-            }
-        }
-        if (pProducto.getStock()> 0) {
-            pUtilQuery.AgregarWhereAnd(" p.Stock=? ");
-            if (statement != null) {
-                statement.setInt(pUtilQuery.getNumWhere(), pProducto.getStock());
             }
         }
         if (pProducto.getEstado() > 0) {

@@ -7,8 +7,8 @@ import java.sql.*;
 public class ComunDB {
     static String connectionUrl = "jdbc:sqlserver://localhost"
             + "database=ComercialEliasib"
-            + "user=Admin"
-            + "password=Admin"
+            + "user=daniel"
+            + "password=admin1"
             + "trustServerCertificate=true";
     
     public static Connection ObtenerConexion() throws SQLException{

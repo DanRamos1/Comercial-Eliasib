@@ -2,6 +2,36 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/create.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/detail.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/edit.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/src/java/comercialeliasib/ui/webapp/controllers/UsuarioServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/detail.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/create.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/Index.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/Index.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/src/java/comercialeliasib/ui/webapp/controllers/ProductoServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/Index.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/detail.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/delete.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/create.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/edit.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/delete.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/Index.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/src/java/comercialeliasib/ui/webapp/utils/IAuthorize.java</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/src/java/comercialeliasib/ui/webapp/utils/SessionUser.java</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/select.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/select.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/select.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/delete.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Empleado/edit.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/select.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/create.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Producto/delete.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Rol/select.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Marca/edit.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasib.UI.WebApp/web/Views/Categoria/detail.jsp</file>
+        </group>
     </open-files>
 </project-private>

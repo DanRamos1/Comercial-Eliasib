@@ -3,11 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package comercialeliasib.ui.webapp.utils;
+import java.io.IOException;
+import jakarta.servlet.ServletException;
 
-/**
- *
- * @author Admin
- */
-public interface IAutrhorize {
+
+
+public interface IAuthorize {
+    void authorize() throws ServletException,IOException;
+    
+    
     
 }

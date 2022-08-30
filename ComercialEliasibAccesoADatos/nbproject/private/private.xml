@@ -5,6 +5,9 @@
         <group name="Proyecto-Java">
             <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/ComunDB.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/MarcaDAL.java</file>
+            <file>file:/C:/Users/Admin/Documents/Proyecto-Java/ComercialEliasibAccesoADatos/src/comercialeliasib/accesoadatos/UsuarioDAL.java</file>
+        </group>
     </open-files>
 </project-private>
