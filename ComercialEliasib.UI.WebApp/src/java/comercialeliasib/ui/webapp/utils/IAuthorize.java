@@ -4,7 +4,7 @@
  */
 package comercialeliasib.ui.webapp.utils;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
+import javax.servlet.ServletException;
 
 
 

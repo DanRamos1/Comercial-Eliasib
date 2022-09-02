@@ -5,11 +5,11 @@ import java.sql.*;
 
 
 public class ComunDB {
-    static String connectionUrl = "jdbc:sqlserver://localhost"
-            + "database=ComercialEliasib"
-            + "user=daniel"
-            + "password=admin1"
-            + "trustServerCertificate=true";
+    static String connectionUrl = "jdbc:sqlserver://Comercial-Eliasib.mssql.somee.com;"
+            + "database=Comercial-Eliasib;"
+            + "user=DanielRJ;"
+            + "password=daniel03;"
+            +  "TrueServerCertificate=False";
     
     public static Connection ObtenerConexion() throws SQLException{
         DriverManager.deregisterDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());

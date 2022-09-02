@@ -11,11 +11,11 @@ import comercialeliasib.entidadesdenegocio.Usuario;
 import comercialeliasib.ui.webapp.utils.SessionUser;
 import comercialeliasib.ui.webapp.utils.Utilidad;
 import java.io.IOException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +28,7 @@ public class UsuarioServlet extends HttpServlet {
         String accion = Utilidad.GetParameter(request, "accion", "index");
         Usuario usuario = new Usuario();
         usuario.setNombre(Utilidad.GetParameter(request, "nombre", ""));
-        usuario.setApellido(Utilidad.GetParameter(request, "apellido", ""));
+        usuario.setApellido(Utilidad.GetParameter(request, "Apellido", ""));
         usuario.setLogin(Utilidad.GetParameter(request, "login", ""));
         usuario.setIdRol(Integer.parseInt(Utilidad.GetParameter(request, "idRol", "0")));
         usuario.setEstado(Byte.parseByte(Utilidad.GetParameter(request, "estado", "0")));
@@ -157,12 +157,14 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
-    private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         SessionUser.cerrarSession(request);
         request.getRequestDispatcher("Views/Usuario/login.jsp").forward(request, response);
     }
 
-    private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             Usuario usuario_auth = UsuarioDAL.Login(usuario);

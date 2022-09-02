@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="comercialeliasub.ui.webapp.utils.*"%>
+<%@page import="comercialeliasib.ui.webapp.utils.*"%>
 <%@page import="javax.servlet.http.HttpServletRequest"%>
 <% if (SessionUser.isAuth(request) == false) {
          response.sendRedirect("Usuario?accion=login");
@@ -22,7 +22,7 @@
         <main class="container"> 
             <div class="row">
                 <div class="col l12 s12">
-                    <h1>Bienvenidos</h1> 
+                    <h1>Bienvenido</h1> 
                     <span>Al sistema para aprender a como colocarle seguridad a sus aplicaciones web</span> 
                 </div>
             </div>            
