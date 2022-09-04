@@ -1,8 +1,4 @@
-<%-- 
-    Document   : create
-    Created on : 30 ago 2022, 19:14:20
-    Author     : Admin
---%>
+
 
 <%@page import="comercialeliasib.entidadesdenegocio.Estado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,19 +29,19 @@
                         <label for="txtLogin">Login</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtPassword" type="password" name="password" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtPassword" type="password" name="contrasenia" required class="validate" minlength="5" maxlength="32">
                         <label for="txtPassword">Password</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtConfirmPassword_aux" type="password" name="confirmPassword_aux" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtConfirmPassword_aux" type="password" name="confirmar_contrasenia_aux" required class="validate" minlength="5" maxlength="32">
                         <label for="txtConfirmPassword_aux">Confirmar password</label>
                         <span id="txtConfirmPassword_aux_error" style="color:red" class="helper-text"></span>
                     </div> 
                     <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus" class="validate">
+                        <select id="slEstatus" name="estado" class="validate">
                             <option value="0">SELECCIONAR</option>
-                            <option value="<%=Estado.ACTIVO%>">ACTIVO</option>
-                            <option value="<%=Estado.INACTIVO%>">INACTIVO</option>
+                            <option value="<%=Usuario.EstatusUsuario.ACTIVO%>">ACTIVO</option>
+                            <option value="<%=Usuario.EstatusUsuario.INACTIVO%>">INACTIVO</option>
                         </select>       
                         <label for="slEstatus">Estatus</label>
                         <span id="slEstatus_error" style="color:red" class="helper-text"></span>

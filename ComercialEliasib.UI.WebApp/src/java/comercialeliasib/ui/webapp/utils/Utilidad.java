@@ -8,7 +8,7 @@ import java.io.IOException;
 
 
 public class Utilidad {
-    public static String GetParameter(HttpServletRequest request, String pKey, String pDefault) {
+    public static String getParameter(HttpServletRequest request, String pKey, String pDefault) {
         String result = "";
         String value = request.getParameter(pKey);
         if (value != null && value.trim().length() > 0) {

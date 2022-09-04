@@ -25,32 +25,33 @@ import java.util.ArrayList;
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/Usuario"})
 public class UsuarioServlet extends HttpServlet {
     private Usuario obtenerUsuario(HttpServletRequest request) {
-        String accion = Utilidad.GetParameter(request, "accion", "index");
+        String accion = Utilidad.getParameter(request, "accion", "index");
         Usuario usuario = new Usuario();
-        usuario.setNombre(Utilidad.GetParameter(request, "nombre", ""));
-        usuario.setApellido(Utilidad.GetParameter(request, "Apellido", ""));
-        usuario.setLogin(Utilidad.GetParameter(request, "login", ""));
-        usuario.setIdRol(Integer.parseInt(Utilidad.GetParameter(request, "idRol", "0")));
-        usuario.setEstado(Byte.parseByte(Utilidad.GetParameter(request, "estado", "0")));
+        usuario.setNombre(Utilidad.getParameter(request, "nombre", ""));
+        usuario.setApellido(Utilidad.getParameter(request, "Apellido", ""));
+        usuario.setLogin(Utilidad.getParameter(request, "login", ""));
+        usuario.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
+        usuario.setEstado(Byte.parseByte(Utilidad.getParameter(request, "estado", "0")));
         
         if (accion.equals("index")) {
-            usuario.setTop_aux(Integer.parseInt(Utilidad.GetParameter(request, "top_aux", "10")));
+            usuario.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
             usuario.setTop_aux(usuario.getTop_aux() == 0 ? Integer.MAX_VALUE : usuario.getTop_aux());
         }
         
         if (accion.equals("login") || accion.equals("create") || accion.equals("cambiarpass")) {
-            usuario.setContrasenia(Utilidad.GetParameter(request, "contrasenia", ""));
-            usuario.setConfirmar_contrasenia(Utilidad.GetParameter(request, "confirmar_contrasenia", ""));
+            usuario.setContrasenia(Utilidad.getParameter(request, "contrasenia", ""));
+            usuario.setConfirmar_contrasenia(Utilidad.getParameter(request, "confirmar_contrasenia", ""));
             if (accion.equals("cambiarpass")) {
-                usuario.setId(Integer.parseInt(Utilidad.GetParameter(request, "id", "0")));
+                usuario.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
             }
         } else {
-            usuario.setId(Integer.parseInt(Utilidad.GetParameter(request, "id", "0")));
+            usuario.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
         }
         return usuario;
     }
-
-    private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         try {
             Usuario usuario = new Usuario();
             usuario.setTop_aux(10);
@@ -62,8 +63,10 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    
+    private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             ArrayList<Usuario> usuarios = UsuarioDAL.BuscarIncluirRol(usuario);
@@ -74,12 +77,14 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         request.getRequestDispatcher("Views/Usuario/create.jsp").forward(request, response);
     }
-
-    private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             int result = UsuarioDAL.Crear(usuario);
@@ -92,10 +97,10 @@ public class UsuarioServlet extends HttpServlet {
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
-
     }
-
-    private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+        private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) 
+                throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             Usuario usuario_result = UsuarioDAL.ObtenerPorId(usuario);
@@ -105,19 +110,22 @@ public class UsuarioServlet extends HttpServlet {
                 usuario_result.setRol(RolDAL.ObtenerPorId(rol));
                 request.setAttribute("usuario", usuario_result);
             } else {
-                Utilidad.enviarError("El Id:" + usuario_result.getId() + " no existe en la tabla de Usuario", request, response);
+                Utilidad.enviarError("El Id:" + usuario_result.getId() + 
+                        " no existe en la tabla de Usuario", request, response);
             }
         } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doGetRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    private void doGetRequestEdit(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         requestObtenerPorId(request, response);
         request.getRequestDispatcher("Views/Usuario/edit.jsp").forward(request, response);
     }
-
-    private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             int result = UsuarioDAL.Modificar(usuario);
@@ -131,18 +139,21 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doGetRequestDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doGetRequestDetails(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         requestObtenerPorId(request, response);
         request.getRequestDispatcher("Views/Usuario/details.jsp").forward(request, response);
-    }
-
-    private void doGetRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    } 
+    
+        private void doGetRequestDelete(HttpServletRequest request, HttpServletResponse response) 
+                throws ServletException, IOException {
         requestObtenerPorId(request, response);
         request.getRequestDispatcher("Views/Usuario/delete.jsp").forward(request, response);
     }
 
-    private void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
             int result = UsuarioDAL.Eliminar(usuario);
@@ -156,14 +167,14 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response) 
+    
+    private void doGetRequestLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SessionUser.cerrarSession(request);
         request.getRequestDispatcher("Views/Usuario/login.jsp").forward(request, response);
     }
 
-    private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response) 
+    private void doPostRequestLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
@@ -183,11 +194,12 @@ public class UsuarioServlet extends HttpServlet {
             request.setAttribute("error", ex.getMessage());
         }
     }
-
-    private void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  
+    private void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         try {
             Usuario usuario = new Usuario();
-            usuario.setLogin(SessionUser.getUser(request)); 
+            usuario.setLogin(SessionUser.getUser(request));
             Usuario usuario_result = UsuarioDAL.Buscar(usuario).get(0);
             if (usuario_result.getId() > 0) {
                 request.setAttribute("usuario", usuario_result);
@@ -199,11 +211,12 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-
-    private void doPostRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    private void doPostRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request);
-            String passActual = Utilidad.GetParameter(request, "passwordActual", "");
+            String passActual = Utilidad.getParameter(request, "passwordActual", "");
             int result = UsuarioDAL.CambiarPassword(usuario, passActual);
             if (result != 0) {
                 response.sendRedirect("Usuario?accion=login");
@@ -214,17 +227,15 @@ public class UsuarioServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Métodos para procesar las peticiones Get y Post">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion = Utilidad.GetParameter(request, "accion", "index");
+        String accion = Utilidad.getParameter(request, "accion", "index");
         if (accion.equals("login")) {
             request.setAttribute("accion", accion);
             doGetRequestLogin(request, response);
-        } else { 
+        } else {
             SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
@@ -262,11 +273,11 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String accion = Utilidad.GetParameter(request, "accion", "index");
+        String accion = Utilidad.getParameter(request, "accion", "index");
         if (accion.equals("login")) {
             request.setAttribute("accion", accion);
             doPostRequestLogin(request, response);
-        } else { 
+        } else {
             SessionUser.authorize(request, response, () -> {
                 switch (accion) {
                     case "index":
@@ -296,5 +307,4 @@ public class UsuarioServlet extends HttpServlet {
             });
         }
     }
-
 }

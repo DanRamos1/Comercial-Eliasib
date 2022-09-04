@@ -82,16 +82,15 @@ public class UsuarioDAL {
         boolean existe = ExisteLogin(pUsuario); 
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
-                sql = "INSERT INTO Usuarios(IdRol,Nombre,Apellido,Email,Login,Contrasenia,Estado,Fecha) VALUES(?,?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Usuarios(IdRol,Nombre,Apellido,Login,Contrasenia,Estado,Fecha) VALUES(?,?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
                     ps.setInt(1, pUsuario.getIdRol());  
                     ps.setString(2, pUsuario.getNombre());
                     ps.setString(3, pUsuario.getApellido());  
-                    ps.setString(4, pUsuario.getEmail());
-                    ps.setString(5, pUsuario.getLogin()); 
-                    ps.setString(6, EncriptarMD5(pUsuario.getContrasenia()));  
-                    ps.setByte(7, pUsuario.getEstado());  
-                    ps.setDate(9, java.sql.Date.valueOf(LocalDate.now())); 
+                    ps.setString(4, pUsuario.getLogin()); 
+                    ps.setString(5, EncriptarMD5(pUsuario.getContrasenia()));  
+                    ps.setByte(6, pUsuario.getEstado());  
+                    ps.setDate(7, java.sql.Date.valueOf(LocalDate.now())); 
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {
@@ -115,12 +114,11 @@ public class UsuarioDAL {
         boolean existe = ExisteLogin(pUsuario); 
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
-                sql = "UPDATE Usuarios SET IdRol=?, Nombre=?, Apellido=?, Email=?, Login=?, Estado=? WHERE Id=?";
+                sql = "UPDATE Usuarios SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estado=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
                     ps.setInt(1, pUsuario.getIdRol());
                     ps.setString(2, pUsuario.getNombre()); 
-                    ps.setString(3, pUsuario.getApellido());
-                    ps.setString(4, pUsuario.getEmail());                   
+                    ps.setString(3, pUsuario.getApellido());                   
                     ps.setString(5, pUsuario.getLogin());   
                     ps.setByte(6, pUsuario.getEstado());  
                     ps.setInt(7, pUsuario.getId());
@@ -170,8 +168,6 @@ public class UsuarioDAL {
         pUsuario.setNombre(pResultSet.getString(pIndex)); 
         pIndex++;
         pUsuario.setApellido(pResultSet.getString(pIndex));
-        pIndex++;
-        pUsuario.setEmail(pResultSet.getString(pIndex));
         pIndex++;
         pUsuario.setLogin(pResultSet.getString(pIndex)); 
         pIndex++;
@@ -286,12 +282,7 @@ public class UsuarioDAL {
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pUsuario.getApellido() + "%");
             }
         }
-        if (pUsuario.getEmail() != null && pUsuario.getEmail().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" u.Email LIKE ? ");
-            if (statement != null) {
-                statement.setString(pUtilQuery.getNumWhere(), "%" + pUsuario.getApellido() + "%");
-            }
-        }
+
         if (pUsuario.getLogin() != null && pUsuario.getLogin().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" u.Login=? ");
             if (statement != null) {

@@ -22,6 +22,7 @@ public class Usuario {
     private Rol rol;
 
     public Usuario() {
+        
     }
 
     public Usuario(int id, int idRol, String nombre, String Apellido, String email, String login, String contrasenia, byte estado, LocalDate fecha) {
@@ -130,6 +131,11 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+    public class EstatusUsuario {
+
+        public static final byte ACTIVO = 1;
+        public static final byte INACTIVO = 2;
     }
     
 }

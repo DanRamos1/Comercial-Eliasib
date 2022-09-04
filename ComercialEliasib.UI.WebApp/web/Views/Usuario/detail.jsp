@@ -6,7 +6,7 @@
 
 <%@page import="comercialeliasib.entidadesdenegocio.Estado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="comercialeliasibs.entidadesdenegocio.Usuario"%>
+<%@page import="comercialeliasib.entidadesdenegocio.Usuario"%>
 <% Usuario usuario = (Usuario) request.getAttribute("usuario");%>
 <!DOCTYPE html>
 <html>

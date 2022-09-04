@@ -22,8 +22,8 @@
         <main class="container"> 
             <div class="row">
                 <div class="col l12 s12">
-                    <h1>Bienvenido</h1> 
-                    <span>Al sistema para aprender a como colocarle seguridad a sus aplicaciones web</span> 
+                    <h1>Bienvenido/as</h1> 
+                    <span>A esta aplicacion web</span> 
                 </div>
             </div>            
         </main>

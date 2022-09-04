@@ -9,7 +9,7 @@ public class ComunDB {
             + "database=Comercial-Eliasib;"
             + "user=DanielRJ;"
             + "password=daniel03;"
-            +  "TrueServerCertificate=False";
+            +  "loginTimeout=30;encrypt=false;trustServerCertificate=false";
     
     public static Connection ObtenerConexion() throws SQLException{
         DriverManager.deregisterDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
