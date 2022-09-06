@@ -22,8 +22,8 @@
         <main class="container"> 
             <div class="row">
                 <div class="col l12 s12">
-                    <h1>Bienvenido/as</h1> 
-                    <span>A esta aplicacion web</span> 
+                    <h1>Bienvenidos</h1> 
+                    <span></span> 
                 </div>
             </div>            
         </main>

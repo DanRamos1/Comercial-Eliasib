@@ -34,7 +34,7 @@
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">send</i>Login</button>                                               
+                        <button type="sutmit" class="waves-effect waves-light btn brown"><i class="material-icons right">send</i>Entrar</button>                                               
                     </div>
                 </div>
                 <% if (request.getAttribute("error") != null) { %>

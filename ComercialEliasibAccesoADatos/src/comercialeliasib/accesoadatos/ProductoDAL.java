@@ -10,8 +10,7 @@ import java.util.HashMap;
 public class ProductoDAL {
     
     static String ObtenerCampos() {
-        return "p.Id, p.IdCategoria, p.IdMarca, p.Nombre, p.Descripcion, p.Precio,"
-                + "  p.Estado, p.Fecha";
+        return "p.Id, p.IdCategoria, p.IdMarca, p.Nombre, p.Descripcion, p.Precio, p.Stock, p.RutaImagen, p.Estado, p.Fecha";
     }
      
     private static String ObtenerSelect(Producto pProducto) {
@@ -64,15 +63,16 @@ public class ProductoDAL {
         boolean existe = ExisteProducto(pProducto); 
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
-                sql = "INSERT INTO Productos(IdRol,Nombre,Apellido,Contacto,numeroDocumento,Estado,Fecha) VALUES(?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Productos(IdRol,Nombre,Apellido,Contacto,numeroDocumento,Estado,Fecha) VALUES(?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
                     ps.setInt(1, pProducto.getIdCategoria());  
                     ps.setInt(2, pProducto.getIdMarca());
                     ps.setString(3, pProducto.getNombre());  
                     ps.setString(4, pProducto.getDescripcion());
                     ps.setDouble(5, pProducto.getPrecio());   
+                    ps.setInt(6, pProducto.getStock());
                     ps.setByte(7, (byte) pProducto.getEstado());  
-                    ps.setDate(9, java.sql.Date.valueOf(LocalDate.now())); 
+                    ps.setDate(8, java.sql.Date.valueOf(LocalDate.now())); 
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {
@@ -95,13 +95,14 @@ public class ProductoDAL {
         String sql;
         try (Connection conn = ComunDB.ObtenerConexion();) { 
             sql = "UPDATE Productos SET IdCategoria=?, IdMarca=?, Nombre=?, Descripcion=?, "
-                    + "Precio=?, Estado=? WHERE Id=?"; 
+                    + "Precio=?, Stock=?, RutaImagen=?, Estado=? WHERE Id=?"; 
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
                     ps.setInt(1, pProducto.getIdCategoria());  
                     ps.setInt(2, pProducto.getIdMarca());
                     ps.setString(3, pProducto.getNombre());  
                     ps.setString(4, pProducto.getDescripcion());
                     ps.setDouble(5, pProducto.getPrecio());   
+                    ps.setInt(6, pProducto.getStock());
                     ps.setByte(7, (byte) pProducto.getEstado());
                 result = ps.executeUpdate();
                 ps.close();
@@ -149,6 +150,8 @@ public class ProductoDAL {
         pIndex++;
         pProducto.setPrecio(pResultSet.getDouble(pIndex));
         pIndex++;
+        pProducto.setStock(pResultSet.getInt(pIndex)); 
+        pIndex++;
         pProducto.setEstado(pResultSet.getByte(pIndex)); 
         pIndex++;
         pProducto.setFecha(pResultSet.getDate(pIndex).toLocalDate()); 
@@ -168,40 +171,25 @@ public class ProductoDAL {
         }
     }
     
-    private static void ObtenerDatosIncluirMarca(PreparedStatement pPS, ArrayList<Producto> pProducto) throws Exception {
+    private static void ObtenerDatosIncluirForaneas(PreparedStatement pPS, ArrayList<Producto> pProducto) throws Exception {
         try (ResultSet resultSet = ComunDB.ObtenerResultSet(pPS);) {
+            HashMap<Integer, Categoria> categoriaMap = new HashMap(); 
             HashMap<Integer, Marca> marcaMap = new HashMap(); 
             while (resultSet.next()) { 
                 Producto producto = new Producto();
                 int index = AsignarDatosResultSet(producto, resultSet, 0);
-                if (marcaMap.containsKey(producto.getIdMarca()) == false) { 
+                if (categoriaMap.containsKey(producto.getIdCategoria()) == false || marcaMap.containsKey(producto.getIdMarca()) == false) {
+                    Categoria categoria = new Categoria();
                     Marca marca = new Marca();
+                    CategoriaDAL.AsignarDatosResultSet(categoria, resultSet, index);
                     MarcaDAL.AsignarDatosResultSet(marca, resultSet, index);
-                    marcaMap.put(marca.getId(), marca); 
+                    categoriaMap.put(categoria.getId(), categoria); 
+                    marcaMap.put(marca.getId(), marca);
+                    producto.setCategoria(categoria);
                     producto.setMarca(marca);
                 } else {
-                    producto.setMarca(marcaMap.get(producto.getIdMarca())); 
-                }
-                pProducto.add(producto); 
-            }
-            resultSet.close(); 
-        } catch (SQLException ex) {
-            throw ex;
-        }
-    }
-    private static void ObtenerDatosIncluirCategoria(PreparedStatement pPS, ArrayList<Producto> pProducto) throws Exception {
-        try (ResultSet resultSet = ComunDB.ObtenerResultSet(pPS);) {
-            HashMap<Integer, Categoria> categoriaMap = new HashMap(); 
-            while (resultSet.next()) { 
-                Producto producto = new Producto();
-                int index = AsignarDatosResultSet(producto, resultSet, 0);
-                if (categoriaMap.containsKey(producto.getIdCategoria()) == false) { 
-                    Categoria categoria = new Categoria();
-                    CategoriaDAL.AsignarDatosResultSet(categoria, resultSet, index);
-                    categoriaMap.put(categoria.getId(), categoria); 
-                    producto.setCategoria(categoria);
-                } else {
                     producto.setCategoria(categoriaMap.get(producto.getIdCategoria())); 
+                    producto.setMarca(marcaMap.get(producto.getIdMarca())); 
                 }
                 pProducto.add(producto); 
             }
@@ -293,6 +281,12 @@ public class ProductoDAL {
                 statement.setDouble(pUtilQuery.getNumWhere(), pProducto.getPrecio());
             }
         }
+        if (pProducto.getStock()> 0) {
+            pUtilQuery.AgregarWhereAnd(" p.Stock=? ");
+            if (statement != null) {
+                statement.setInt(pUtilQuery.getNumWhere(), pProducto.getStock());
+            }
+        }
         if (pProducto.getEstado() > 0) {
             pUtilQuery.AgregarWhereAnd(" u.Estado=? "); 
             if (statement != null) {
@@ -303,28 +297,65 @@ public class ProductoDAL {
  
     public static ArrayList<Producto> Buscar(Producto pProducto) throws Exception {
         ArrayList<Producto> productos = new ArrayList();
-        try (Connection conn = ComunDB.ObtenerConexion();) { 
+        try ( Connection conn = ComunDB.ObtenerConexion();) {
             String sql = ObtenerSelect(pProducto);
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
-            QuerySelect(pProducto, utilQuery); 
+            QuerySelect(pProducto, utilQuery);
             sql = utilQuery.getSQL();
-            sql += AgregarOrderBy(pProducto); 
-            try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
+            sql += AgregarOrderBy(pProducto);
+            try ( PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
-                QuerySelect(pProducto, utilQuery); 
-                ObtenerDatos(ps, productos); 
+                QuerySelect(pProducto, utilQuery);
+                ObtenerDatos(ps, productos);
                 ps.close();
             } catch (SQLException ex) {
-                throw ex; 
+                throw ex;
             }
-            conn.close(); 
-        } 
-        catch (SQLException ex) {
-            throw ex; 
+            conn.close();
+        } catch (SQLException ex) {
+            throw ex;
         }
         return productos;
     }
+
+    public static ArrayList<Producto> BuscarIncluirForaneas(Producto pProducto) throws Exception {
+        ArrayList<Producto> productos = new ArrayList();
+        try ( Connection conn = ComunDB.ObtenerConexion();) {
+            String sql = "SELECT ";
+            if (pProducto.getTop_aux() > 0) {
+                sql += "TOP " + pProducto.getTop_aux() + " ";
+            }
+            sql += ObtenerCampos();
+            sql += ",";
+            sql += CategoriaDAL.ObtenerCampos();
+            sql += ",";
+            sql += MarcaDAL.ObtenerCampos();
+            sql += " FROM Productos p";
+            sql += " INNER JOIN Categorias c on (p.IdCategoria=c.Id) INNER JOIN Marcas m on (p.IdMarca=m.Id)";
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
+            QuerySelect(pProducto, utilQuery);
+            sql = utilQuery.getSQL();   
+            sql += AgregarOrderBy(pProducto);
+            try ( PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                QuerySelect(pProducto, utilQuery);
+                ObtenerDatosIncluirForaneas(ps, productos);
+                ps.close();
+            } catch (SQLException ex) {
+                throw ex;
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return productos;
+    } 
+    
+
 }

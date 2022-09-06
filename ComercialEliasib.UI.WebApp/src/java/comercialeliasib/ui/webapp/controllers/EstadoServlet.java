@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "EstadoServlet", urlPatterns = {"/EstadoServlet"})
+@WebServlet(name = "EstadoServlet", urlPatterns = {"/Estado"})
 public class EstadoServlet extends HttpServlet {
 
     /**

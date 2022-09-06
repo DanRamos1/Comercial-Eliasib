@@ -82,15 +82,16 @@ public class UsuarioDAL {
         boolean existe = ExisteLogin(pUsuario); 
         if (existe == false) {
             try (Connection conn = ComunDB.ObtenerConexion();) { 
-                sql = "INSERT INTO Usuarios(IdRol,Nombre,Apellido,Login,Contrasenia,Estado,Fecha) VALUES(?,?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Usuarios(Id,IdRol,Nombre,Apellido,Login,Contrasenia,Estado,Fecha) VALUES(?,?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) {
-                    ps.setInt(1, pUsuario.getIdRol());  
-                    ps.setString(2, pUsuario.getNombre());
-                    ps.setString(3, pUsuario.getApellido());  
-                    ps.setString(4, pUsuario.getLogin()); 
-                    ps.setString(5, EncriptarMD5(pUsuario.getContrasenia()));  
-                    ps.setByte(6, pUsuario.getEstado());  
-                    ps.setDate(7, java.sql.Date.valueOf(LocalDate.now())); 
+                     ps.setInt(1, pUsuario.getIdRol());
+                    ps.setInt(2, pUsuario.getIdRol());  
+                    ps.setString(3, pUsuario.getNombre());
+                    ps.setString(4, pUsuario.getApellido());  
+                    ps.setString(5, pUsuario.getLogin()); 
+                    ps.setString(6, EncriptarMD5(pUsuario.getContrasenia()));  
+                    ps.setByte(7, pUsuario.getEstado());  
+                    ps.setDate(8, java.sql.Date.valueOf(LocalDate.now())); 
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {

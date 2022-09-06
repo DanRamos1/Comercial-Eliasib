@@ -30,7 +30,7 @@ public class CategoriaDAL {
         ArrayList<Categoria> categorias = new ArrayList();
         try (Connection conn = ComunDB.ObtenerConexion();) { 
             String sql = ObtenerSelect(pCategoria);  
-            sql += " WHERE m.Id<>? AND m.Nombre=?";
+            sql += " WHERE c.Id<>? AND c.Nombre=?";
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn,sql);){
                 ps.setInt(1, pCategoria.getId()); 
                 ps.setString(2, pCategoria.getNombre());  
@@ -89,6 +89,7 @@ public class CategoriaDAL {
                 sql = "UPDATE Categorias SET Nombre=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
                     ps.setString(1, pCategoria.getNombre()); 
+                    ps.setInt(2, pCategoria.getId());
                     result = ps.executeUpdate(); 
                     ps.close(); 
                 } catch (SQLException ex) {
@@ -154,7 +155,7 @@ public class CategoriaDAL {
         ArrayList<Categoria> categorias = new ArrayList();
         try (Connection conn = ComunDB.ObtenerConexion();) {
             String sql = ObtenerSelect(pCategoria);
-            sql += " WHERE r.Id=?";
+            sql += " WHERE c.Id=?";
             try (PreparedStatement ps = ComunDB.CreatePreparedStatement(conn, sql);) { 
                 ps.setInt(1, pCategoria.getId()); 
                 ObtenerDatos(ps, categorias); 

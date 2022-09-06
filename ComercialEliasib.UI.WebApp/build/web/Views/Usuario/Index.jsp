@@ -1,13 +1,6 @@
-<%-- 
-    Document   : Index
-    Created on : 30 ago 2022, 19:15:15
-    Author     : Admin
---%>
-
 <%@page import="comercialeliasib.entidadesdenegocio.Estado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="comercialeliasib.entidadesdenegocio.Usuario"%>
-<%@page import="comercialeliasib.entidadesdenegocio.Rol"%>
 <%@page import="java.util.ArrayList"%>
 <% ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios");
     int numPage = 1;
@@ -52,10 +45,10 @@
                         <label for="txtLogin">Login</label>
                     </div>                    
                     <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus">
+                        <select id="slEstatus" name="estado">
                             <option value="0">SELECCIONAR</option>
-                            <option value="<%=Estado.ACTIVO%>">ACTIVO</option>
-                            <option value="<%=Estado.INACTIVO%>">INACTIVO</option>
+                            <option value="<%=Usuario.EstatusUsuario.ACTIVO%>">ACTIVO</option>
+                            <option value="<%=Usuario.EstatusUsuario.INACTIVO%>">INACTIVO</option>
                         </select>       
                         <label for="slEstatus">Estatus</label>
                     </div>
@@ -77,7 +70,6 @@
                     </div>
                 </div>
             </form>
-
             <div class="row">
                 <div class="col l12 s12">
                     <div style="overflow: auto">
@@ -87,7 +79,7 @@
                                     <th>Nombre</th>  
                                     <th>Apellido</th> 
                                     <th>Login</th>  
-                                    <th>Estatus</th>  
+                                    <th>Estado</th>  
                                     <th>Rol</th>   
                                     <th>Fecha registro</th>   
                                     <th>Acciones</th>
@@ -101,23 +93,23 @@
                                             double divTempNumPage = (double) countReg / (double) numReg;
                                             tempNumPage = (int) Math.ceil(divTempNumPage);
                                         }
-                                        String estatus = "";
+                                        String estado = "";
                                         switch (usuario.getEstado()) {
                                             case Estado.ACTIVO:
-                                                estatus = "ACTIVO";
+                                                estado = "ACTIVO";
                                                 break;
                                             case Estado.INACTIVO:
-                                                estatus = "INACTIVO";
+                                                estado = "INACTIVO";
                                                 break;
                                             default:
-                                                estatus = "";
+                                                estado = "";
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>">                                    
                                     <td><%=usuario.getNombre()%></td>  
                                     <td><%=usuario.getApellido()%></td>
                                     <td><%=usuario.getLogin()%></td>  
-                                    <td><%=estatus%></td>
+                                    <td><%=estado%></td>
                                     <td><%=usuario.getRol().getNombre()%></td> 
                                     <td><%=usuario.getFecha()%></td> 
                                     <td>

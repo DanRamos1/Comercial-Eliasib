@@ -5,10 +5,9 @@ import comercialeliasib.entidadesdenegocio.Rol;
 import java.util.ArrayList;
 import java.sql.*;
 
-
 public class RolDAL {
     static String ObtenerCampos(){
-        return "r.Id,r.Nombre";
+        return "r.Id, r.Nombre";
     }
     
     private static String ObtenerSelect(Rol pRol){
@@ -22,7 +21,7 @@ public class RolDAL {
     }
     
     private static String AgregarOrderBy(Rol pRol) {
-        String sql = " ORDER BY u.Id DESC";
+        String sql = " ORDER BY r.Id DESC";
         return sql;
     }
     
